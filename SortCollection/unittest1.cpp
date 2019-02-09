@@ -45,8 +45,8 @@ namespace SortCollection
 		auto begin_it = begin(container);
 		auto end_it = end(container);
 
-		auto& expedted = expected_array<size>();
-		Assert::IsTrue(std::equal(begin_it, end_it, expedted, expedted + size));
+		auto& expected = expected_array<size>();
+		Assert::IsTrue(std::equal(begin_it, end_it, expected, expected + size));
 	}
 
 	TEST_CLASS(UnitTest1)
@@ -75,7 +75,20 @@ namespace SortCollection
 		{
 			auto array = create_shuffled_vector(1000);
 
-			sort_collection::sort<sort_collection::shaker_sort>(array);
+			constexpr sort_collection::shaker_sort shaker_sort{};
+			
+			shaker_sort(std::begin(array), std::end(array), std::less<int>{});
+
+			//sort_collection::sort<sort_collection::shaker_sort>(array);
+			
+			check_array<1000>(array);
+		}
+
+		TEST_METHOD(comb_sort_test)
+		{
+			auto array = create_shuffled_vector(1000);
+
+			sort_collection::sort<sort_collection::comb_sort>(array);
 
 			check_array<1000>(array);
 		}

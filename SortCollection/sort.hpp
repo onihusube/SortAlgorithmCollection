@@ -25,7 +25,7 @@ namespace sort_collection {
 			* @return comp(*lhs, *rhs)
 			*/
 			template<typename Iterator, typename Compare>
-			constexpr auto swap(Iterator lhs, Iterator rhs, Compare&& comp) -> bool {
+			constexpr auto compare_and_swap(Iterator lhs, Iterator rhs, Compare&& comp) -> bool {
 				if (comp(*lhs, *rhs)) {
 					std::swap(*lhs, *rhs);
 					return true;
@@ -89,7 +89,7 @@ namespace sort_collection {
 				for (auto loopend = end - 1; loopend != begin; std::advance(loopend, -count)) {
 					count = 0;
 					for (auto current = begin; current != loopend; ++current) {
-						if (detail::swap(current + 1, current,comp) == false)++count;
+						if (detail::compare_and_swap(current + 1, current,comp) == false)++count;
 						else count = 0;
 					}
 					if (count == 0) ++count;
@@ -124,7 +124,7 @@ namespace sort_collection {
 				{
 					//右から左
 					for (auto current = far_left; current != far_right; ++current) {
-						if (detail::swap(current + 1, current, comp) == true)last_swap = current;
+						if (detail::compare_and_swap(current + 1, current, comp) == true)last_swap = current;
 					}
 
 					if (far_left == last_swap) return;
@@ -134,7 +134,7 @@ namespace sort_collection {
 
 					//左から右
 					for (auto current = far_right; current != far_left; --current) {
-						if (detail::swap(current, current - 1, comp) == true)last_swap = current;
+						if (detail::compare_and_swap(current, current - 1, comp) == true)last_swap = current;
 					}
 
 					//左端狭める
@@ -144,6 +144,47 @@ namespace sort_collection {
 
 			template<typename BidirectionalIterator, typename Compare>
 			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) const {
+				sort(begin, end, std::forward<Compare>(comp));
+			}
+		};
+
+		struct comb_sort {
+			static constexpr bool stable = false;
+
+			using method = category::method::swap;
+
+			template<typename ForwardIterator, typename Compare>
+			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = comp_v<ForwardIterator>) {
+				//イテレータ間距離の型
+				using diff_t = typename std::iterator_traits<ForwardIterator>::difference_type;
+
+				//h = h / 1.3 を求める
+				constexpr auto calc_h = [](const diff_t N) -> diff_t { return (N == diff_t(1)) ? N : static_cast<diff_t>(std::trunc(N / 1.3)); };
+				//要素数
+				auto N = static_cast<diff_t>(std::distance(begin, end));
+
+				if (N < diff_t(2)) return;
+				//入れ替えが起きたかどうか
+				bool is_swapped = false;
+
+				//h=1のとき、交換が行われなくなるまで繰り返す
+				for (auto h = calc_h(N); diff_t(1) < h || is_swapped; h = calc_h(h)) {
+					is_swapped = false;
+					for (auto i = diff_t(0); (i + h) < N; ++i) {
+						//iの位置
+						auto&& current = std::next(begin, i);
+						//i+hの位置
+						auto&& next = std::next(current, h);
+
+						//next < current の時入れ替え
+						//一回でもtrueが帰ればis_swappedは以降trueとなる（条件分岐回避のため、趣味）
+						is_swapped |= detail::compare_and_swap(std::move(next), std::move(current), comp);
+					}
+				}
+			}
+
+			template<typename ForwardIterator, typename Compare>
+			constexpr void operator()(ForwardIterator begin, ForwardIterator end, Compare&& comp = comp_v<ForwardIterator>) const {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
 		};
