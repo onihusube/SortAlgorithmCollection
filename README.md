@@ -24,8 +24,10 @@ void sample_sort() {
 void sample_sort2() {
   int array[] = {8, 1, 3, 2, 4, 6, 5, 7};
   
-  //sorted by bubble sort.
+  //create functor for sort.
   constexpr sort_collection::shaker_sort shaker_sort{};
+  
+  //sorted by shaker sort.
   shaker_sort(std::begin(array), std::end(array), std::less<int>{});
   
   for (auto& n : array) {
