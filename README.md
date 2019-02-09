@@ -2,8 +2,8 @@
 
 実装中…
 
-[x]bubble sort
-[x]shaker sort
+- [x] bubble sort
+- [x] shaker sort
 
 ```cpp
 
