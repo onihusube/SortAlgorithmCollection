@@ -1,5 +1,7 @@
 # Sort Algorithm Collection
 
+[![Build status](https://ci.appveyor.com/api/projects/status/vscdijos680uomlv/branch/master?svg=true)](https://ci.appveyor.com/project/onihusube/sortalgorithmcollection/branch/master)
+
 実装中…
 
 Implemented algorithms.
