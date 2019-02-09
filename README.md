@@ -2,6 +2,9 @@
 
 実装中…
 
+[x]bubble sort
+[x]shaker sort
+
 ```cpp
 
 #include "sort.hpp"
