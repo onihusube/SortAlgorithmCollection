@@ -7,6 +7,7 @@
 Implemented algorithms.
 - [x] bubble sort
 - [x] shaker sort
+- [x] comb sort
 
 Need for C++17 compiler. For exmaple:
 - [x] Visual Studio 2017 15.9.4 or later
