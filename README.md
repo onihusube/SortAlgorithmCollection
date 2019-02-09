@@ -6,8 +6,10 @@ Implemented algorithms.
 - [x] bubble sort
 - [x] shaker sort
 
-Need for C++17 compiler.
+Need for C++17 compiler. For exmaple:
 - [x] Visual Studio 2017 15.9.4 or later
+- [x] clang 7.0.0 or later
+- [x] gcc 8.2.0 or later
 
 sample code.
 ```cpp
@@ -42,3 +44,4 @@ void sample_sort2() {
 }
 
 ```
+[Run the sample code in Wandbox.](https://wandbox.org/permlink/vdYXQeAk3jvrTsVg)
