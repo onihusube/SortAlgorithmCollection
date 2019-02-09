@@ -1,10 +1,15 @@
-# SortAlgorithmCollection
+# Sort Algorithm Collection
 
 実装中…
 
+Implemented algorithms.
 - [x] bubble sort
 - [x] shaker sort
 
+Need for C++17 compiler.
+- [x] Visual Studio 2017 15.9.4 or later
+
+sample code.
 ```cpp
 
 #include "sort.hpp"
