@@ -200,6 +200,47 @@ namespace sort_collection {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
 		};
+
+
+		struct gnome_sort {
+			static constexpr bool stable = false;
+
+			using method = category::method::swap;
+
+			template<typename BidirectionalIterator, typename Compare>
+			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) {
+				
+				//終了位置
+				auto far_right = end - 1;
+				//注目位置
+				auto current = begin;
+
+				while (current != far_right)
+				{
+					//current < current + 1　次の要素と比較
+					if (detail::compare_and_swap(current + 1, current, comp) == true) {
+						//入れ替えが起きていたら
+						if (current != begin) {
+							//一つ戻って比較
+							--current;
+						}
+						else {
+							//左端の時は進む
+							++current;
+						}
+					}
+					else {
+						//入れ替えが起きなかったら
+						++current;
+					}
+				}
+			}
+
+			template<typename BidirectionalIterator, typename Compare>
+			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) const {
+				sort(begin, end, std::forward<Compare>(comp));
+			}
+		};
 	}
 
 	/**
