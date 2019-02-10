@@ -1,4 +1,4 @@
-# Sort Algorithm Collection
+# Sorting Algorithm Collection by C++
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vscdijos680uomlv/branch/master?svg=true)](https://ci.appveyor.com/project/onihusube/sortalgorithmcollection/branch/master)
 
