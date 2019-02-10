@@ -148,6 +148,9 @@ namespace sort_collection {
 			}
 		};
 
+		/**
+		* @brief コムソート（コムソート11）
+		*/
 		struct comb_sort {
 			static constexpr bool stable = false;
 
@@ -159,7 +162,16 @@ namespace sort_collection {
 				using diff_t = typename std::iterator_traits<ForwardIterator>::difference_type;
 
 				//h = h / 1.3 を求める
-				constexpr auto calc_h = [](const diff_t N) -> diff_t { return (N == diff_t(1)) ? N : static_cast<diff_t>(std::trunc(N / 1.3)); };
+				constexpr auto calc_h = [](const diff_t N) -> diff_t { 
+					if (N == diff_t(1)) return N;
+					else {
+						auto h = static_cast<diff_t>(std::trunc(N / 1.3));
+						//Comb sort 11
+						if (h == diff_t(9) || h == diff_t(10))return diff_t(11);
+						return h;
+					}
+				};
+
 				//要素数
 				auto N = static_cast<diff_t>(std::distance(begin, end));
 
