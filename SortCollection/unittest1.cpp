@@ -98,6 +98,15 @@ namespace SortCollection
 			auto array = create_shuffled_vector(1000);
 
 			sort_collection::sort<sort_collection::gnome_sort>(array);
+			
+			check_array<1000>(array);
+		}
+
+		TEST_METHOD(selection_sort_test)
+		{
+			auto array = create_shuffled_vector(1000);
+
+			sort_collection::sort<sort_collection::selection_sort>(array);
 
 			check_array<1000>(array);
 		}

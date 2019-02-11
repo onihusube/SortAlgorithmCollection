@@ -27,46 +27,47 @@ namespace sort_collection {
 			template<typename Iterator, typename Compare>
 			constexpr auto compare_and_swap(Iterator lhs, Iterator rhs, Compare&& comp) -> bool {
 				if (comp(*lhs, *rhs)) {
-					std::swap(*lhs, *rhs);
+					using std::swap;
+					swap(*lhs, *rhs);
 					return true;
 				}
 				return false;
 			}
-		}
 
-		/**
-		* @brief ソートのカテゴリに関わるタグ等の定義
-		*/
-		namespace category {
+			/**
+			* @brief ソートのカテゴリに関わるタグ等の定義
+			*/
+			namespace category {
 
-			inline namespace method {
+				inline namespace method {
 
-				struct swap {};
+					struct swap {};
 
-				struct select {};
+					struct select {};
 
-				struct insert {};
+					struct insert {};
 
-				struct merge {};
+					struct merge {};
 
-				struct partitioning{};
+					struct partitioning {};
+				}
+
 			}
 
+			/**
+			* @brief デフォルトの比較ファンクタ型
+			* @tparam Iterator イテレータ
+			*/
+			template<typename Iterator>
+			using default_compare = std::less<typename std::iterator_traits<Iterator>::value_type>;
+
+			/**
+			* @brief デフォルトの比較ファンクタ
+			* @tparam Iterator イテレータ
+			*/
+			template<typename Iterator>
+			inline constexpr auto comp_v = default_compare<Iterator>{};
 		}
-
-		/**
-		* @brief デフォルトの比較ファンクタ型
-		* @tparam Iterator イテレータ
-		*/
-		template<typename Iterator>
-		using default_compare = std::less<typename std::iterator_traits<Iterator>::value_type>;
-
-		/**
-		* @brief デフォルトの比較ファンクタ
-		* @tparam Iterator イテレータ
-		*/
-		template<typename Iterator>
-		inline constexpr auto comp_v = default_compare<Iterator>{};
 
 
 		/**
@@ -75,11 +76,11 @@ namespace sort_collection {
 		struct bubble_sort {
 			static constexpr bool stable = true;
 
-			using method = category::method::swap;
+			using method = detail::category::method::swap;
 
 
 			template<typename BidirectionalIterator, typename Compare>
-			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) {
+			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				if (begin == end) return;
 
 				//入れ替えが行われなかった回数（後ろから見て並んでる個数）を記録
@@ -97,7 +98,7 @@ namespace sort_collection {
 			}
 
 			template<typename BidirectionalIterator, typename Compare>
-			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) const {
+			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) const {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
 		};
@@ -108,10 +109,10 @@ namespace sort_collection {
 		struct shaker_sort {
 			static constexpr bool stable = true;
 
-			using method = category::method::swap;
+			using method = detail::category::method::swap;
 			
 			template<typename BidirectionalIterator, typename Compare>
-			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) {
+			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				if (begin == end) return;
 				
 				//左端と右端
@@ -143,7 +144,7 @@ namespace sort_collection {
 			}
 
 			template<typename BidirectionalIterator, typename Compare>
-			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) const {
+			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) const {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
 		};
@@ -154,10 +155,10 @@ namespace sort_collection {
 		struct comb_sort {
 			static constexpr bool stable = false;
 
-			using method = category::method::swap;
+			using method = detail::category::method::swap;
 
 			template<typename ForwardIterator, typename Compare>
-			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = comp_v<ForwardIterator>) {
+			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) {
 				//イテレータ間距離の型
 				using diff_t = typename std::iterator_traits<ForwardIterator>::difference_type;
 
@@ -196,19 +197,19 @@ namespace sort_collection {
 			}
 
 			template<typename ForwardIterator, typename Compare>
-			constexpr void operator()(ForwardIterator begin, ForwardIterator end, Compare&& comp = comp_v<ForwardIterator>) const {
+			constexpr void operator()(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) const {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
 		};
 
 
 		struct gnome_sort {
-			static constexpr bool stable = false;
+			static constexpr bool stable = true;
 
-			using method = category::method::swap;
+			using method = detail::category::method::swap;
 
 			template<typename BidirectionalIterator, typename Compare>
-			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) {
+			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				
 				//終了位置
 				auto far_right = end - 1;
@@ -237,7 +238,35 @@ namespace sort_collection {
 			}
 
 			template<typename BidirectionalIterator, typename Compare>
-			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) const {
+			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) const {
+				sort(begin, end, std::forward<Compare>(comp));
+			}
+		};
+
+		struct selection_sort {
+			static constexpr bool stable = false;
+
+			using method = detail::category::method::swap;
+
+			template<typename ForwardIterator, typename Compare>
+			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) {
+				//範囲の右端
+				auto far_right = end - 1;
+
+				if (begin == far_right) return;
+
+				for (auto current = begin; current != far_right; ++current) {
+					using std::swap;
+
+					//一番小さい要素を探す
+					auto min_it = std::min_element(current, end, comp);
+					//currentが小さくなければ入れ替え
+					if (min_it != current) swap(*min_it, *current);
+				}
+			}
+
+			template<typename ForwardIterator, typename Compare>
+			constexpr void operator()(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) const {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
 		};
@@ -270,7 +299,7 @@ namespace sort_collection {
 		using std::begin;
 		using iterator = std::remove_reference_t<decltype(begin(container))>;
 
-		sort<SortAlgorithm>(container, comp_v<iterator>);
+		sort<SortAlgorithm>(container, detail::comp_v<iterator>);
 	}
 
 	/**
@@ -282,7 +311,7 @@ namespace sort_collection {
 	* @param comp 比較に使うファンクタ
 	*/
 	template<typename SortAlgorithm, typename BidirectionalIterator, typename Compare>
-	constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = comp_v<BidirectionalIterator>) {
+	constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 		SortAlgorithm::sort(begin, end, std::forward<Compare>(comp));
 	}
 
