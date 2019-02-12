@@ -110,5 +110,14 @@ namespace SortCollection
 
 			check_array<1000>(array);
 		}
+
+		TEST_METHOD(insertion_sort_test)
+		{
+			auto array = create_shuffled_vector(1000);
+
+			sort_collection::sort<sort_collection::selection_sort>(array);
+
+			check_array<1000>(array);
+		}
 	};
 }
