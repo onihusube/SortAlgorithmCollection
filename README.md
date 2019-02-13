@@ -20,7 +20,7 @@ Need for C++17 compiler. For exmaple:
 
 sample code.
 ```cpp
-
+//header only.
 #include "sort.hpp"
 
 void sample_sort() {
