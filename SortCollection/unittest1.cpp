@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -116,6 +116,15 @@ namespace SortCollection
 			auto array = create_shuffled_vector(1000);
 
 			sort_collection::sort<sort_collection::selection_sort>(array);
+
+			check_array<1000>(array);
+		}
+
+		TEST_METHOD(shell_sort_test)
+		{
+			auto array = create_shuffled_vector(1000);
+
+			sort_collection::sort<sort_collection::shell_sort>(array);
 
 			check_array<1000>(array);
 		}

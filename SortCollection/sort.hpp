@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <type_traits>
 #include <iterator>
@@ -7,21 +7,21 @@
 namespace sort_collection {
 
 	/**
-	* @brief Šeíƒ\[ƒgƒAƒ‹ƒSƒŠƒYƒ€‚ğ’è‹`
+	* @brief å„ç¨®ã‚½ãƒ¼ãƒˆã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã‚’å®šç¾©
 	*/
 	inline namespace algorithm {
 
 		/**
-		* @brief “à•”ˆ—
+		* @brief å†…éƒ¨å‡¦ç†
 		*/
 		namespace detail {
 
 			/**
-			* @brief •K—v‚È‚çƒXƒƒbƒv‚·‚é
-			* @detail comp(*lhs, *rhs) == true‚È‚çswap(*lhs, *rhs)
-			* @param lhs ¶•Ó
-			* @param rhs ‰E•Ó
-			* @param comp ”äŠr‚Ég‚¤ƒtƒ@ƒ“ƒNƒ^
+			* @brief å¿…è¦ãªã‚‰ã‚¹ãƒ¯ãƒƒãƒ—ã™ã‚‹
+			* @detail comp(*lhs, *rhs) == trueãªã‚‰swap(*lhs, *rhs)
+			* @param lhs å·¦è¾º
+			* @param rhs å³è¾º
+			* @param comp æ¯”è¼ƒã«ä½¿ã†ãƒ•ã‚¡ãƒ³ã‚¯ã‚¿
 			* @return comp(*lhs, *rhs)
 			*/
 			template<typename Iterator, typename Compare>
@@ -35,7 +35,7 @@ namespace sort_collection {
 			}
 
 			/**
-			* @brief ƒ\[ƒg‚ÌƒJƒeƒSƒŠ‚ÉŠÖ‚í‚éƒ^ƒO“™‚Ì’è‹`
+			* @brief ã‚½ãƒ¼ãƒˆã®ã‚«ãƒ†ã‚´ãƒªã«é–¢ã‚ã‚‹ã‚¿ã‚°ç­‰ã®å®šç¾©
 			*/
 			namespace category {
 
@@ -55,15 +55,15 @@ namespace sort_collection {
 			}
 
 			/**
-			* @brief ƒfƒtƒHƒ‹ƒg‚Ì”äŠrƒtƒ@ƒ“ƒNƒ^Œ^
-			* @tparam Iterator ƒCƒeƒŒ[ƒ^
+			* @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ¯”è¼ƒãƒ•ã‚¡ãƒ³ã‚¯ã‚¿å‹
+			* @tparam Iterator ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 			*/
 			template<typename Iterator>
 			using default_compare = std::less<typename std::iterator_traits<Iterator>::value_type>;
 
 			/**
-			* @brief ƒfƒtƒHƒ‹ƒg‚Ì”äŠrƒtƒ@ƒ“ƒNƒ^
-			* @tparam Iterator ƒCƒeƒŒ[ƒ^
+			* @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ¯”è¼ƒãƒ•ã‚¡ãƒ³ã‚¯ã‚¿
+			* @tparam Iterator ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 			*/
 			template<typename Iterator>
 			inline constexpr auto comp_v = default_compare<Iterator>{};
@@ -71,7 +71,7 @@ namespace sort_collection {
 
 
 		/**
-		* @brief ƒoƒuƒ‹ƒ\[ƒg
+		* @brief ãƒãƒ–ãƒ«ã‚½ãƒ¼ãƒˆ
 		*/
 		struct bubble_sort {
 			static constexpr bool stable = true;
@@ -83,10 +83,10 @@ namespace sort_collection {
 			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				if (begin == end) return;
 
-				//“ü‚ê‘Ö‚¦‚ªs‚í‚ê‚È‚©‚Á‚½‰ñ”iŒã‚ë‚©‚çŒ©‚Ä•À‚ñ‚Å‚éŒÂ”j‚ğ‹L˜^
+				//å…¥ã‚Œæ›¿ãˆãŒè¡Œã‚ã‚Œãªã‹ã£ãŸå›æ•°ï¼ˆå¾Œã‚ã‹ã‚‰è¦‹ã¦ä¸¦ã‚“ã§ã‚‹å€‹æ•°ï¼‰ã‚’è¨˜éŒ²
 				int count{};
 
-				//Œã‚ë‚©‚ç˜A‘±‚µ‚Äcount‰ñ“ü‚ê‘Ö‚¦‚ç‚ê‚Ä‚¢‚È‚¯‚ê‚Îi=•À‚ñ‚Å‚¢‚éjA‚»‚Ì•ªŒã‚ë‚ğŒ¸‚ç‚·iŒ©‚És‚©‚È‚­‚·‚éj
+				//å¾Œã‚ã‹ã‚‰é€£ç¶šã—ã¦countå›å…¥ã‚Œæ›¿ãˆã‚‰ã‚Œã¦ã„ãªã‘ã‚Œã°ï¼ˆ=ä¸¦ã‚“ã§ã„ã‚‹ï¼‰ã€ãã®åˆ†å¾Œã‚ã‚’æ¸›ã‚‰ã™ï¼ˆè¦‹ã«è¡Œã‹ãªãã™ã‚‹ï¼‰
 				for (auto loopend = end - 1; loopend != begin; std::advance(loopend, -count)) {
 					count = 0;
 					for (auto current = begin; current != loopend; ++current) {
@@ -104,7 +104,7 @@ namespace sort_collection {
 		};
 
 		/**
-		* @brief ƒVƒFƒCƒJ[ƒ\[ƒg
+		* @brief ã‚·ã‚§ã‚¤ã‚«ãƒ¼ã‚½ãƒ¼ãƒˆ
 		*/
 		struct shaker_sort {
 			static constexpr bool stable = true;
@@ -115,30 +115,30 @@ namespace sort_collection {
 			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				if (begin == end) return;
 				
-				//¶’[‚Æ‰E’[
+				//å·¦ç«¯ã¨å³ç«¯
 				auto far_left = begin;
 				auto far_right = end - 1;
-				//ÅŒã‚É“ü‚ê‘Ö‚¦‚ª‹N‚«‚½êŠ
+				//æœ€å¾Œã«å…¥ã‚Œæ›¿ãˆãŒèµ·ããŸå ´æ‰€
 				auto last_swap = begin;
 
 				while (far_left != far_right)
 				{
-					//‰E‚©‚ç¶
+					//å³ã‹ã‚‰å·¦
 					for (auto current = far_left; current != far_right; ++current) {
 						if (detail::compare_and_swap(current + 1, current, comp) == true)last_swap = current;
 					}
 
 					if (far_left == last_swap) return;
 
-					//‰E’[‹·‚ß‚é
+					//å³ç«¯ç‹­ã‚ã‚‹
 					far_right = last_swap;
 
-					//¶‚©‚ç‰E
+					//å·¦ã‹ã‚‰å³
 					for (auto current = far_right; current != far_left; --current) {
 						if (detail::compare_and_swap(current, current - 1, comp) == true)last_swap = current;
 					}
 
-					//¶’[‹·‚ß‚é
+					//å·¦ç«¯ç‹­ã‚ã‚‹
 					far_left = last_swap;
 				}
 			}
@@ -150,7 +150,7 @@ namespace sort_collection {
 		};
 
 		/**
-		* @brief ƒRƒ€ƒ\[ƒgiƒRƒ€ƒ\[ƒg11j
+		* @brief ã‚³ãƒ ã‚½ãƒ¼ãƒˆï¼ˆã‚³ãƒ ã‚½ãƒ¼ãƒˆ11ï¼‰
 		*/
 		struct comb_sort {
 			static constexpr bool stable = false;
@@ -159,10 +159,10 @@ namespace sort_collection {
 
 			template<typename ForwardIterator, typename Compare>
 			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) {
-				//ƒCƒeƒŒ[ƒ^ŠÔ‹——£‚ÌŒ^
+				//ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿é–“è·é›¢ã®å‹
 				using diff_t = typename std::iterator_traits<ForwardIterator>::difference_type;
 
-				//h = h / 1.3 ‚ğ‹‚ß‚é
+				//h = h / 1.3 ã‚’æ±‚ã‚ã‚‹
 				constexpr auto calc_h = [](const diff_t N) -> diff_t { 
 					if (N == diff_t(1)) return N;
 					else {
@@ -173,24 +173,24 @@ namespace sort_collection {
 					}
 				};
 
-				//—v‘f”
+				//è¦ç´ æ•°
 				auto N = static_cast<diff_t>(std::distance(begin, end));
 
 				if (N < diff_t(2)) return;
-				//“ü‚ê‘Ö‚¦‚ª‹N‚«‚½‚©‚Ç‚¤‚©
+				//å…¥ã‚Œæ›¿ãˆãŒèµ·ããŸã‹ã©ã†ã‹
 				bool is_swapped = false;
 
-				//h=1‚Ì‚Æ‚«AŒğŠ·‚ªs‚í‚ê‚È‚­‚È‚é‚Ü‚ÅŒJ‚è•Ô‚·
+				//h=1ã®ã¨ãã€äº¤æ›ãŒè¡Œã‚ã‚Œãªããªã‚‹ã¾ã§ç¹°ã‚Šè¿”ã™
 				for (auto h = calc_h(N); diff_t(1) < h || is_swapped; h = calc_h(h)) {
 					is_swapped = false;
 					for (auto i = diff_t(0); (i + h) < N; ++i) {
-						//i‚ÌˆÊ’u
+						//iã®ä½ç½®
 						auto&& current = std::next(begin, i);
-						//i+h‚ÌˆÊ’u
+						//i+hã®ä½ç½®
 						auto&& next = std::next(current, h);
 
-						//next < current ‚Ì“ü‚ê‘Ö‚¦
-						//ˆê‰ñ‚Å‚àtrue‚ª‹A‚ê‚Îis_swapped‚ÍˆÈ~true‚Æ‚È‚éiğŒ•ªŠò‰ñ”ğ‚Ì‚½‚ßAï–¡j
+						//next < current ã®æ™‚å…¥ã‚Œæ›¿ãˆ
+						//ä¸€å›ã§ã‚‚trueãŒå¸°ã‚Œã°is_swappedã¯ä»¥é™trueã¨ãªã‚‹ï¼ˆæ¡ä»¶åˆ†å²å›é¿ã®ãŸã‚ã€è¶£å‘³ï¼‰
 						is_swapped |= detail::compare_and_swap(std::move(next), std::move(current), comp);
 					}
 				}
@@ -204,7 +204,7 @@ namespace sort_collection {
 
 
 		/**
-		* @brief ƒm[ƒ€ƒ\[ƒg
+		* @brief ãƒãƒ¼ãƒ ã‚½ãƒ¼ãƒˆ
 		*/
 		struct gnome_sort {
 			static constexpr bool stable = true;
@@ -214,27 +214,27 @@ namespace sort_collection {
 			template<typename BidirectionalIterator, typename Compare>
 			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				
-				//I—¹ˆÊ’u
+				//çµ‚äº†ä½ç½®
 				auto far_right = end - 1;
-				//’–ÚˆÊ’u
+				//æ³¨ç›®ä½ç½®
 				auto current = begin;
 
 				while (current != far_right)
 				{
-					//current < current + 1@Ÿ‚Ì—v‘f‚Æ”äŠr
+					//current < current + 1ã€€æ¬¡ã®è¦ç´ ã¨æ¯”è¼ƒ
 					if (detail::compare_and_swap(current + 1, current, comp) == true) {
-						//“ü‚ê‘Ö‚¦‚ª‹N‚«‚Ä‚¢‚½‚ç
+						//å…¥ã‚Œæ›¿ãˆãŒèµ·ãã¦ã„ãŸã‚‰
 						if (current != begin) {
-							//ˆê‚Â–ß‚Á‚Ä”äŠr
+							//ä¸€ã¤æˆ»ã£ã¦æ¯”è¼ƒ
 							--current;
 						}
 						else {
-							//¶’[‚Ì‚Íi‚Ş
+							//å·¦ç«¯ã®æ™‚ã¯é€²ã‚€
 							++current;
 						}
 					}
 					else {
-						//“ü‚ê‘Ö‚¦‚ª‹N‚«‚È‚©‚Á‚½‚ç
+						//å…¥ã‚Œæ›¿ãˆãŒèµ·ããªã‹ã£ãŸã‚‰
 						++current;
 					}
 				}
@@ -247,7 +247,7 @@ namespace sort_collection {
 		};
 
 		/**
-		* @brief ‘I‘ğƒ\[ƒg
+		* @brief é¸æŠã‚½ãƒ¼ãƒˆ
 		*/
 		struct selection_sort {
 			static constexpr bool stable = false;
@@ -256,7 +256,7 @@ namespace sort_collection {
 
 			template<typename ForwardIterator, typename Compare>
 			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) {
-				//”ÍˆÍ‚Ì‰E’[
+				//ç¯„å›²ã®å³ç«¯
 				auto far_right = end - 1;
 
 				if (begin == far_right) return;
@@ -264,9 +264,9 @@ namespace sort_collection {
 				for (auto current = begin; current != far_right; ++current) {
 					using std::swap;
 
-					//ˆê”Ô¬‚³‚¢—v‘f‚ğ’T‚·
+					//ä¸€ç•ªå°ã•ã„è¦ç´ ã‚’æ¢ã™
 					auto min_it = std::min_element(current, end, comp);
-					//‚»‚ê‚ªcurrent‚ª‚Å‚È‚¯‚ê‚Î“ü‚ê‘Ö‚¦
+					//ãã‚ŒãŒcurrentãŒã§ãªã‘ã‚Œã°å…¥ã‚Œæ›¿ãˆ
 					if (min_it != current) swap(*min_it, *current);
 				}
 			}
@@ -286,28 +286,99 @@ namespace sort_collection {
 			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
 				auto far_right = end - 1;
 
-				//æ“ª‚ÆŸ‚ğ‚Æ‚è‚ ‚¦‚¸”äŠr‚µ“ü‚ê‘Ö‚¦
+				//å…ˆé ­ã¨æ¬¡ã‚’ã¨ã‚Šã‚ãˆãšæ¯”è¼ƒã—å…¥ã‚Œæ›¿ãˆ
 				detail::compare_and_swap(begin + 1, begin, comp);
 
-				//3”Ô–Ú‚Ì—v‘f‚©‚ç
+				//3ç•ªç›®ã®è¦ç´ ã‹ã‚‰
 				for (auto current = begin + 2; curent != far_right; ++current) {
-					//ˆê‚Â¶‚Ì—v‘f
+					//ä¸€ã¤å·¦ã®è¦ç´ 
 					auto prev = current - 1;
 
-					//³‡‚Å‚ ‚ê‚ÎŸ‚Ö
+					//æ­£é †ã§ã‚ã‚Œã°æ¬¡ã¸
 					if (comp(*prev, *current) == true) continue;
 
-					//next‚Ì—v‘f‚ğƒRƒs[
+					//nextã®è¦ç´ ã‚’ã‚³ãƒ”ãƒ¼
 					auto tmp = std::move(*current);
 
-					//‘}“üˆÊ’u‚ğ’T‚·
+					//æŒ¿å…¥ä½ç½®ã‚’æ¢ã™
 					do {
 						*(prev + 1) = std::move(*prev);
 						--prev;
-						//prev‚ªæ“ª‚Å‚È‚­Atmp < prev‚Å‚ ‚éŠÔƒ‹[ƒv
+						//prevãŒå…ˆé ­ã§ãªãã€tmp < prevã§ã‚ã‚‹é–“ãƒ«ãƒ¼ãƒ—
 					} while (prev != begin && comp(tmp, *prev));
-					//‘}“ü
+					//æŒ¿å…¥
 					*prev = std::move(tmp);
+				}
+			}
+
+			template<typename BidirectionalIterator, typename Compare>
+			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) const {
+				sort(begin, end, std::forward<Compare>(comp));
+			}
+		};
+
+		struct shell_sort {
+			static constexpr bool stable = false;
+
+			using method = detail::category::method::insert;
+
+			template<typename BidirectionalIterator, typename Compare>
+			static constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
+				//ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿é–“è·é›¢ã®å‹
+				using diff_t = typename std::iterator_traits<BidirectionalIterator>::difference_type;
+
+				//h = (h - 1)/3 ã‚’æ±‚ã‚ã‚‹
+				constexpr auto calc_h = [](const diff_t N) -> diff_t { return (N - 1) / 3; };
+
+				//è¦ç´ æ•°
+				auto N = static_cast<diff_t>(std::distance(begin, end));
+
+				if (N < diff_t(2)) return;
+
+				//hæœ€å¤§ã‚’æ¢ç´¢
+				diff_t h_max{};
+				for (diff_t ht = 1; ht < diff_t(N / 9); ht = (3 * ht + 1)) {
+					h_max = ht;
+				}
+				
+				for (auto h = h_max; diff_t(1) <= h; h = calc_h(h)) {
+
+					//æ³¨ç›®è¦ç´ 
+					auto current = std::next(begin, h);
+
+					//å…ˆé ­ã¨æ¬¡ã‚’ã¨ã‚Šã‚ãˆãšæ¯”è¼ƒã—å…¥ã‚Œæ›¿ãˆ
+					detail::compare_and_swap(current, begin, comp);
+
+					//ä¸€ã¤å‰ã®è¦ç´ 
+					auto prev = begin;
+
+					//æŒ¿å…¥ã‚½ãƒ¼ãƒˆ
+					for (auto index = h + h; index < N; index += h) {
+
+						//è¦ç´ ã‚’é€²ã‚ã‚‹
+						prev = current;
+						std::advance(current, h);
+
+						//æ­£é †ã§ãªã‘ã‚Œã°æŒ¿å…¥æ“ä½œ
+						if (comp(*prev, *current) == false) {
+							//currentã®è¦ç´ ã‚’ã‚³ãƒ”ãƒ¼
+							auto tmp = std::move(*current);
+
+							//å‰æ–¹ã«æˆ»ã‚‹å‰ã®prev
+							auto before_prev = current;
+							//æŒ¿å…¥ä½ç½®ã‚’æ¢ã™
+							do {
+								*before_prev = std::move(*prev);
+								before_prev = prev;
+								//prevã®æ–¹ãŒå…ˆã«beginã‚’é£›ã³å‡ºã™ã®ã§ãã®å¯¾ç­–
+								if (prev == begin) break;
+								std::advance(prev, -h);
+								//before_prevãŒå…ˆé ­ã§ãªãã€tmp < prevã§ã‚ã‚‹é–“ãƒ«ãƒ¼ãƒ—
+							} while (comp(tmp, *prev));
+							//æŒ¿å…¥
+							*before_prev = std::move(tmp);
+						}
+					}
 				}
 			}
 
@@ -319,10 +390,10 @@ namespace sort_collection {
 	}
 
 	/**
-	* @brief ƒRƒ“ƒeƒi‚É‘Î‚µƒ\[ƒg‚ğs‚¤
-	* @tparam SortAlgorithm ƒ\[ƒg‚Ég—p‚·‚éƒAƒ‹ƒSƒŠƒYƒ€
-	* @param container ƒ\[ƒg‚µ‚½‚¢”CˆÓ‚ÌƒRƒ“ƒeƒii::iterator = BidirectionalIterator‚Å‚ ‚é‚±‚Æj
-	* @param comp ”äŠr‚Ég‚¤ƒtƒ@ƒ“ƒNƒ^
+	* @brief ã‚³ãƒ³ãƒ†ãƒŠã«å¯¾ã—ã‚½ãƒ¼ãƒˆã‚’è¡Œã†
+	* @tparam SortAlgorithm ã‚½ãƒ¼ãƒˆã«ä½¿ç”¨ã™ã‚‹ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ 
+	* @param container ã‚½ãƒ¼ãƒˆã—ãŸã„ä»»æ„ã®ã‚³ãƒ³ãƒ†ãƒŠï¼ˆ::iterator = BidirectionalIteratorã§ã‚ã‚‹ã“ã¨ï¼‰
+	* @param comp æ¯”è¼ƒã«ä½¿ã†ãƒ•ã‚¡ãƒ³ã‚¯ã‚¿
 	*/
 	template<typename SortAlgorithm, typename Container, typename Compare>
 	constexpr void sort(Container& container, Compare&& comp) {
@@ -336,9 +407,9 @@ namespace sort_collection {
 	}
 
 	/**
-	* @brief ƒRƒ“ƒeƒi‚É‘Î‚µƒ\[ƒg‚ğs‚¤
-	* @tparam SortAlgorithm ƒ\[ƒg‚Ég—p‚·‚éƒAƒ‹ƒSƒŠƒYƒ€
-	* @param container ƒ\[ƒg‚µ‚½‚¢”CˆÓ‚ÌƒRƒ“ƒeƒii::iterator = BidirectionalIterator‚Å‚ ‚é‚±‚Æj
+	* @brief ã‚³ãƒ³ãƒ†ãƒŠã«å¯¾ã—ã‚½ãƒ¼ãƒˆã‚’è¡Œã†
+	* @tparam SortAlgorithm ã‚½ãƒ¼ãƒˆã«ä½¿ç”¨ã™ã‚‹ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ 
+	* @param container ã‚½ãƒ¼ãƒˆã—ãŸã„ä»»æ„ã®ã‚³ãƒ³ãƒ†ãƒŠï¼ˆ::iterator = BidirectionalIteratorã§ã‚ã‚‹ã“ã¨ï¼‰
 	*/
 	template<typename SortAlgorithm, typename Container>
 	constexpr void sort(Container& container) {
@@ -349,12 +420,12 @@ namespace sort_collection {
 	}
 
 	/**
-	* @brief ”ÍˆÍ‚É‘Î‚µƒ\[ƒg‚ğs‚¤
-	* @tparam SortAlgorithm ƒ\[ƒg‚Ég—p‚·‚éƒAƒ‹ƒSƒŠƒYƒ€
-	* @tparam BidirectionalIterator •À‚×‘Ö‚¦‚é‚Ì‚Ég‚¤IteratoriBidirectionalIterator‚Å‚ ‚é‚±‚Æj
-	* @param begin ”ÍˆÍ‚Ì‰‚ß
-	* @param end ”ÍˆÍ‚ÌI‚í‚è
-	* @param comp ”äŠr‚Ég‚¤ƒtƒ@ƒ“ƒNƒ^
+	* @brief ç¯„å›²ã«å¯¾ã—ã‚½ãƒ¼ãƒˆã‚’è¡Œã†
+	* @tparam SortAlgorithm ã‚½ãƒ¼ãƒˆã«ä½¿ç”¨ã™ã‚‹ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ 
+	* @tparam BidirectionalIterator ä¸¦ã¹æ›¿ãˆã‚‹ã®ã«ä½¿ã†Iteratorï¼ˆBidirectionalIteratorã§ã‚ã‚‹ã“ã¨ï¼‰
+	* @param begin ç¯„å›²ã®åˆã‚
+	* @param end ç¯„å›²ã®çµ‚ã‚ã‚Š
+	* @param comp æ¯”è¼ƒã«ä½¿ã†ãƒ•ã‚¡ãƒ³ã‚¯ã‚¿
 	*/
 	template<typename SortAlgorithm, typename BidirectionalIterator, typename Compare>
 	constexpr void sort(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) {
