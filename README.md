@@ -12,6 +12,7 @@ Implemented algorithms.
 - [x] selection sort
 - [x] insertion sort
 - [x] shell sort
+- [x] marge sort
 
 Need for C++17 compiler. For exmaple:
 - [x] Visual Studio 2017 15.9.4 or later
