@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <iterator>
 #include <utility>
+#include <memory>
 
 namespace sort_collection {
 
@@ -317,6 +318,9 @@ namespace sort_collection {
 			}
 		};
 
+		/**
+		* @brief シェルソート
+		*/
 		struct shell_sort {
 			static constexpr bool stable = false;
 
@@ -386,6 +390,97 @@ namespace sort_collection {
 			constexpr void operator()(BidirectionalIterator begin, BidirectionalIterator end, Compare&& comp = detail::comp_v<BidirectionalIterator>) const {
 				sort(begin, end, std::forward<Compare>(comp));
 			}
+		};
+
+		/**
+		* @brief マージソート
+		*/
+		struct marge_sort {
+			static constexpr bool stable = false;
+
+			using method = detail::category::method::insert;
+
+			template<typename ForwardIterator, typename Compare>
+			static constexpr void sort(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) {
+				//イテレータ間距離の型
+				using diff_t  = typename std::iterator_traits<ForwardIterator>::difference_type;
+				using value_t = typename std::iterator_traits<ForwardIterator>::value_type;
+
+				//要素数
+				auto N = diff_t(std::distance(begin, end));
+
+				//作業用メモリ確保
+				auto workspace = std::make_unique<value_t[]>(size_t(N));
+				
+				//委託
+				margesort_impl(begin, end, std::forward<Compare>(comp), workspace.get());
+			}
+
+			template<typename ForwardIterator, typename Compare>
+			constexpr void operator()(ForwardIterator begin, ForwardIterator end, Compare&& comp = detail::comp_v<ForwardIterator>) const {
+				sort(begin, end, std::forward<Compare>(comp));
+			}
+
+		private:
+
+			template<typename ForwardIterator, typename Compare, typename T>
+			static constexpr void margesort_impl(ForwardIterator begin, ForwardIterator end, Compare&& comp, T* workspace) {
+				//イテレータ間距離の型
+				using diff_t = typename std::iterator_traits<ForwardIterator>::difference_type;
+
+				//要素数
+				auto N = diff_t(std::distance(begin, end));
+
+				if (diff_t(2) < N) {
+					auto center_index = static_cast<diff_t>(std::ceil(N / 2.0));
+					auto center = std::next(begin, center_index);
+
+					//右側シーケンスをソート
+					margesort_impl(begin, center, comp, workspace);
+					//左側シーケンスをソート
+					margesort_impl(center, end, comp, workspace);
+
+					//左側の先頭
+					auto left_head = begin;
+					//右側の先頭
+					auto right_head = center;
+
+					for (int i = 0; i < N; ++i) {
+						//*left_head < *right_head
+						if (comp(*left_head, *right_head) == true) {
+							workspace[i] = std::move(*left_head);
+							++left_head;
+							//左側シーケンスが先に移動し終わった場合はそのまま終わる（残りの右側はソート済み、かつコピーの必要がない）
+							if (left_head == center)break;
+						}
+						else {
+							workspace[i] = std::move(*right_head);
+							++right_head;
+							if (right_head == end) {
+								//左側シーケンスの残りを移動(forward iterator 要求とするためにあえて)
+								for (; left_head != center; ++left_head) {
+									++i;
+									workspace[i] = std::move(*left_head);
+								}
+							}
+						}
+					}
+
+					//元のシーケンスへコピー
+					int index = 0;
+					for (auto current = begin; current != right_head; ++current) {
+						*current = std::move(workspace[index]);
+						++index;
+					}
+				}
+				else if (N == diff_t(2)) {
+					detail::compare_and_swap(begin + 1, begin, comp);
+				}
+				else {
+					return;
+				}
+			}
+
 		};
 	}
 
